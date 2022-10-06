@@ -33,6 +33,11 @@
                   <input type="email" name="email" class="form-control form-control-lg" placeholder="example@gmail.com" />
   
                 </div>
+                <% if (locals.errors && errors.email) { %>
+									<div class="text-danger">
+										<%= errors.email.msg %>
+									</div>
+								<% } %>
               </div>
   
               <hr class="mx-n3">
@@ -51,7 +56,14 @@
               </div>
   
               <hr class="mx-n3">
-  
+              <div class="col-md-6 my-2">
+                <div class="form-group form-check">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" name="remember_user">Recordar mi usuario
+                  </label>
+                </div>
+              </div>
+              
               <div class="px-5 py-4">
                 <button type="submit" class="btn btn-primary btn-lg">Login</button>
               </div>

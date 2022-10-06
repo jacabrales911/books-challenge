@@ -30,6 +30,8 @@ module.exports = (sequelize, dataTypes) => {
       through: 'BooksAuthors',
       foreingKey: 'BookId',
       otherKey: 'AuthorId',
+      onDelete: 'CASCADE',
+      hooks: true, 
       timestamps: false
     });
   };

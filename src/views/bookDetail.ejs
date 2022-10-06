@@ -21,10 +21,19 @@
           <% }) %> </p>
           <p class="lead mb-4 fw-bold">Release Date: <%= book.authors.name %></p>
           <p class="lead mb-4"><%= book.description %></p>
+          <% if (user.CategoryId == 1) { %>
           <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Edit</button>
-            <button type="button" class="btn btn-outline-secondary btn-lg px-4">Delete</button>
+            
+            <a href="/books/edit/<%= book.id %>" 
+             type="button" class="btn btn-primary btn-lg px-4 gap-3">Edit</a>
+
+            <form action="/books/<%= book.id %>?_method=DELETE" method="POST">
+              <button type="submit" class="btn btn-outline-secondary btn-lg px-4">Delete</button>      
+            </form>
           </div>
+          <% } else { %>  
+           <h2>sin privilegios</h2>
+            <% } %> 
         </div>
       </div>
   </div>
