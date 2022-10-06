@@ -5,6 +5,7 @@ const app = express();
 
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+const userLoggedMiddleware = require("./middlewares/userLoggedMiddleware");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -21,7 +22,7 @@ app.use(
     saveUninitialized: false,
   })
 );
-
+app.use(userLoggedMiddleware);
 app.use('/', mainRouter);
 
 app.listen(3000, () => {

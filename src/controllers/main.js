@@ -8,7 +8,7 @@ const mainController = {
     })
       .then((books) => {
        // console.log(JSON.stringify(books, null, 2));
-       console.log(req.session)
+      
         res.render('home', { books ,});
       })
       .catch((error) => console.log(error));
@@ -124,10 +124,7 @@ const mainController = {
             delete userToLogin.Pass;
             req.session.userLogged = userToLogin;
     //console.log(req.session.userLogged);
-    if (req.session.userLogged) {
-      res.locals.isLogged = true;
-      res.locals.userLogged = req.session.userLogged;
-    }
+  
             if(req.body.remember_user) {
               res.cookie('userEmail', req.body.email, { maxAge: (1000 * 60) * 60 })
             }
@@ -183,6 +180,11 @@ const mainController = {
     console.log(error);
 
 })        
+},
+logout: (req, res) => {
+  res.clearCookie('userEmail');
+  req.session.destroy();
+  return res.redirect('/');
 }
 }
 module.exports = mainController;
