@@ -7,20 +7,46 @@ const mainController = {
       include: [{ association: 'authors' }]
     })
       .then((books) => {
+        console.log(JSON.stringify(books, null, 2));
         res.render('home', { books });
       })
       .catch((error) => console.log(error));
   },
   bookDetail: (req, res) => {
     // Implement look for details in the database
-    res.render('bookDetail');
+    db.Book.findByPk(req.params.id,{include: [{ association: 'authors' }]})
+    .then((book) => {
+       //console.log(JSON.stringify(book, null, 2));
+      res.render('bookDetail', { book });
+    })
+    .catch((error) => console.log(error));
+
+    //res.render('bookDetail');
   },
   bookSearch: (req, res) => {
     res.render('search', { books: [] });
   },
   bookSearchResult: (req, res) => {
     // Implement search by title
-    res.render('search');
+    let title = req.body.title;
+    var condition = title ? {  [db.Sequelize.Op.like]: `%${title}%`  } : null;
+    //console.log(condition);
+    db.Book.findAll({
+      include: [{ association: 'authors' }],
+   
+       where: {title:condition}
+      })
+      
+      .then(books => {
+          if (books.length > 0) {
+        
+          res.render('search', {books})    
+          }
+          else {
+            res.render('search', { books: [] }) 
+          }
+        })
+    //res.render('search');
   },
   deleteBook: (req, res) => {
     // Implement delete book
@@ -35,7 +61,20 @@ const mainController = {
   },
   authorBooks: (req, res) => {
     // Implement books by author
-    res.render('authorBooks');
+    let ide=req.params.id
+    var condition = ide ? {  [db.Sequelize.Op.like]: `%${ide}%`  } : null;
+    db.Author.findAll({
+      include: [{ association: 'books' }],
+   
+      where: {id:condition}
+    })
+      .then((authors) => {
+        console.log(JSON.stringify(authors, null, 2));
+        
+        res.render('authorBooks', { authors });
+      })
+      .catch((error) => console.log(error));
+   // res.render('authorBooks');
   },
   register: (req, res) => {
     res.render('register');
