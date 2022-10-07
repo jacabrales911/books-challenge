@@ -53,10 +53,13 @@ const mainController = {
   },
   deleteBook: (req, res) => {
     // Implement delete book
-    let prodId = +req.params.id;
+    let prodId = req.params.id;
    
-    db.Book
-    .destroy({where: {id: prodId}}) // force: true es para asegurar que se ejecute la acción
+    db.Booksauthors
+    .destroy({where: {BookId: prodId  }, force: true}) // force: true es para asegurar que se ejecute la acción
+    .then(() => {
+      db.Book.destroy({ where: { id: prodId } })
+  })
     .then(()=>{
         return res.redirect('/')})
     .catch(error => res.send(error)) 

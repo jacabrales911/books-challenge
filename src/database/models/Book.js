@@ -20,7 +20,9 @@ module.exports = (sequelize, dataTypes) => {
   };
   let config = {
     tableName: 'books',
-    timestamps: false
+    timestamps: false,
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE' 
   };
   const Book = sequelize.define(alias, cols, config);
 
@@ -30,8 +32,6 @@ module.exports = (sequelize, dataTypes) => {
       through: 'BooksAuthors',
       foreingKey: 'BookId',
       otherKey: 'AuthorId',
-      onDelete: 'CASCADE',
-      hooks: true, 
       timestamps: false
     });
   };
